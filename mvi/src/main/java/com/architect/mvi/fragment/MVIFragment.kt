@@ -18,7 +18,11 @@ package com.architect.mvi.fragment
 
 import android.os.Bundle
 import android.util.Log
+import android.view.LayoutInflater
 import android.view.View
+import android.view.ViewGroup
+import androidx.databinding.DataBindingUtil
+import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import com.architect.mvi.util.TAG
@@ -39,20 +43,36 @@ import com.architect.mvi.viewModel.MVIViewModel
  *   extends [MVIViewModel]
  *
  */
-abstract class MVIFragment<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>> :
+abstract class MVIFragment<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>, VDB : ViewDataBinding>(
+    private val layoutId: Int
+) :
     Fragment() {
 
     abstract val viewModel: ViewModel
+
+    private var bindingView: VDB? = null
 
     private val viewStateObserver = Observer<STATE> {
         Log.d(TAG, "observed viewState : $it")
         renderViewState(it)
     }
 
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View? {
+        return inflater.inflate(layoutId, container, false)
+    }
+
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         viewModel.viewStates().observe(viewLifecycleOwner, viewStateObserver)
+        bindingView = DataBindingUtil.bind(view)
+        configDataBinding(bindingView)
     }
+
+    abstract fun configDataBinding(bindingView: VDB?)
 
     abstract fun renderViewState(viewState: STATE)
 

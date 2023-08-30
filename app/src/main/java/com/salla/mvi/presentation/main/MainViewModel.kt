@@ -29,7 +29,7 @@ class MainViewModel(application: Application) :
     override fun handleActions(viewAction: MainViewActions) {
         when (viewAction) {
             is MainViewActions.NewsItemClicked -> newsItemClicked(viewAction.newsItem)
-            MainViewActions.IncrementTitle -> fabClicked()
+            MainViewActions.IncrementTitle -> incrementTitle()
             MainViewActions.OnSwipeRefresh -> fetchNews()
             MainViewActions.FetchNews -> fetchNews()
         }
@@ -39,7 +39,7 @@ class MainViewModel(application: Application) :
         viewState = MainViewState.ShowToast(newsItem.title)
     }
 
-    private fun fabClicked() {
+    private fun incrementTitle() {
         count++
         viewState = MainViewState.UpdateTitle(message = "Title $count")
     }

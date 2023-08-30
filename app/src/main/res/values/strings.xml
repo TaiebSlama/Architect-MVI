@@ -1,0 +1,4 @@
+<resources>
+    <string name="app_name">MVI</string>
+    <string name="increment_title_action">Increment title</string>
+</resources>

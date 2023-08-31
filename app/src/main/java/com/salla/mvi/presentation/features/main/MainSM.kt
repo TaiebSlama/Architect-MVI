@@ -1,4 +1,4 @@
-package com.salla.mvi.presentation.main
+package com.salla.mvi.presentation.features.main
 
 import com.salla.mvi.domain.repository.NewsItem
 

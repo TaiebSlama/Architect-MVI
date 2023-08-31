@@ -8,9 +8,9 @@
 
         <variable
             name="controller"
-            type="com.salla.mvi.presentation.main.MainActivity" />
+            type="com.salla.mvi.presentation.features.main.MainActivity" />
 
-        <import type="com.salla.mvi.presentation.main.MainViewActions" />
+        <import type="com.salla.mvi.presentation.features.main.MainViewActions" />
 
     </data>
 
@@ -43,6 +43,7 @@
                         android:padding="20dp">
 
                         <androidx.appcompat.widget.AppCompatTextView
+                            android:id="@+id/activity_main_title"
                             android:layout_width="0dp"
                             android:layout_height="wrap_content"
                             android:layout_weight="1"
@@ -50,7 +51,7 @@
                             android:textSize="25sp" />
 
                         <Button
-                            android:id="@+id/fabStar"
+                            android:id="@+id/increment_button_button"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:onClick="@{()-> controller.handleIncrementTitle()}"

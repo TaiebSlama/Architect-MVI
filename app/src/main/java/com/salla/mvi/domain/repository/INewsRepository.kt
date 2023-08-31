@@ -10,5 +10,5 @@ import com.salla.mvi.domain.helpers.LCE
  */
 interface INewsRepository {
 
-    fun getMockApiResponse(callback: (LCE<List<NewsItem>>) -> Unit)
+    fun getMockApiResponse(callback: ((LCE<List<NewsItem>>) -> Unit))
 }

@@ -1,6 +1,7 @@
 package com.salla.mvi.presentation.app
 
 import android.app.Application
+import org.koin.core.KoinApplication
 import org.koin.core.context.GlobalContext.startKoin
 
 /**
@@ -9,11 +10,17 @@ import org.koin.core.context.GlobalContext.startKoin
  *
  * [ADD DESCRIPTION]
  */
-class MVIApp : Application() {
+open class MVIApp : Application() {
+
+    internal lateinit var koinApplication: KoinApplication
 
     override fun onCreate() {
         super.onCreate()
-        startKoin {
+        initKoin()
+    }
+
+    open fun initKoin() {
+        koinApplication = startKoin {
             modules(appModule)
         }
     }

@@ -17,7 +17,7 @@ import kotlin.random.Random
  *
  */
 
-class NewsRepository : INewsRepository {
+open class NewsRepository : INewsRepository {
 
     private val scopeIO: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
@@ -25,13 +25,14 @@ class NewsRepository : INewsRepository {
         scopeIO.launch {
             val fakeNews = constructMockData()
             delay(2000)
-            callback(LCE.Success(data = fakeNews))
+            if (callback != null)
+                callback(LCE.Success(data = fakeNews))
         }
     }
 
     private fun constructMockData(): List<NewsItem> {
         val newsList = mutableListOf<NewsItem>()
-        for (i in 1..100) {
+        for (i in 1..4) {
             val title = "News$i"
             val description = "News$i Description"
             val imageId = Random.nextInt(1, 1000)

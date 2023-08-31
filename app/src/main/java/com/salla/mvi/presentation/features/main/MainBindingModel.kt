@@ -1,4 +1,4 @@
-package com.salla.mvi.presentation.main
+package com.salla.mvi.presentation.features.main
 
 import androidx.databinding.BaseObservable
 import androidx.databinding.Bindable

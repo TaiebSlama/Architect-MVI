@@ -1,4 +1,4 @@
-package com.salla.mvi.presentation.main
+package com.salla.mvi.presentation.features.main
 
 import android.app.Application
 import androidx.lifecycle.viewModelScope

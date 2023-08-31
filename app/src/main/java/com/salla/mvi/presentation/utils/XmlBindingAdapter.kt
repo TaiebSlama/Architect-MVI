@@ -5,8 +5,8 @@ import androidx.databinding.BindingAdapter
 import androidx.swiperefreshlayout.widget.SwipeRefreshLayout
 import coil.load
 import com.salla.mvi.R
-import com.salla.mvi.presentation.main.MainViewActions
-import com.salla.mvi.presentation.main.MainViewModel
+import com.salla.mvi.presentation.features.main.MainViewActions
+import com.salla.mvi.presentation.features.main.MainViewModel
 
 /**
  * Created by slama.taieb.contact@gmail.com on 8/30/2023 .

@@ -4,9 +4,10 @@ import android.app.Application
 import androidx.lifecycle.viewModelScope
 import com.architect.mvi.viewModel.MVIViewModel
 import com.salla.mvi.domain.helpers.LCE
+import com.salla.mvi.domain.repository.INewsRepository
 import com.salla.mvi.domain.repository.NewsItem
-import com.salla.mvi.domain.repository.NewsRepository
 import kotlinx.coroutines.launch
+import org.koin.java.KoinJavaComponent
 
 /**
  * Created by slama.taieb.contact@gmail.com on 8/30/2023 .
@@ -20,7 +21,8 @@ import kotlinx.coroutines.launch
 class MainViewModel(application: Application) :
     MVIViewModel<MainViewState, MainViewActions>(application) {
     private var count: Int = 0
-    private val repository: NewsRepository = NewsRepository.getInstance()
+
+    private val repository: INewsRepository by KoinJavaComponent.inject(INewsRepository::class.java)
 
     override fun initAttributes() {
         handleActions(MainViewActions.FetchNews)

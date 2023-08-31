@@ -63,6 +63,15 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.2")
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.2")
 
+    implementation("io.insert-koin:koin-android:3.4.3")
+    // Koin Test features
+    testImplementation("io.insert-koin:koin-test:3.4.3")
+    // Koin for JUnit 4
+    testImplementation("io.insert-koin:koin-test-junit4:3.4.3")
+    // Koin for JUnit 5
+    testImplementation("io.insert-koin:koin-test-junit5:3.4.3")
+
+
     //Image Loading
     implementation("io.coil-kt:coil:2.1.0")
 

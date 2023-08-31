@@ -17,22 +17,11 @@ import kotlin.random.Random
  *
  */
 
-class NewsRepository {
+class NewsRepository : INewsRepository {
 
     private val scopeIO: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
-    companion object {
-        // For Singleton instantiation
-        @Volatile
-        private var instance: NewsRepository? = null
-
-        fun getInstance() =
-            instance ?: synchronized(this) {
-                instance ?: NewsRepository().also { instance = it }
-            }
-    }
-
-    fun getMockApiResponse(callback: (LCE<List<NewsItem>>) -> Unit) {
+    override fun getMockApiResponse(callback: (LCE<List<NewsItem>>) -> Unit) {
         scopeIO.launch {
             val fakeNews = constructMockData()
             delay(2000)

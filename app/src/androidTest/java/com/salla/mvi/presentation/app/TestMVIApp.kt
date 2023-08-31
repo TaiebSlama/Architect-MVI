@@ -6,9 +6,7 @@ import com.salla.mvi.domain.repository.NewsItem
 import com.salla.mvi.domain.repository.NewsRepository
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
-import org.mockito.ArgumentMatchers.any
 import org.mockito.Mockito.mock
-import org.mockito.Mockito.`when`
 import org.mockito.stubbing.Answer
 import kotlin.random.Random
 
@@ -57,6 +55,6 @@ fun createMockNewRepository(): NewsRepository {
         }
         LCE.Success(newsList)
     }
-    `when`(model.getMockApiResponse(any())).thenAnswer(answer)
+//    doAnswer(answer).`when`(model.getMockApiResponse {  })
     return model
 }

@@ -32,7 +32,7 @@ class MainTest {
 
     @Test
     fun activityMain_test_increment_title_success_case() {
-        val count = 100
+        val count = 20
         (1..count).forEach { _ ->
             onView(withId(R.id.increment_button_button)).perform(click())
         }

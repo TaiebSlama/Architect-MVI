@@ -6,6 +6,7 @@ import com.architect.mvi.viewModel.MVIViewModel
 import com.salla.mvi.domain.helpers.LCE
 import com.salla.mvi.domain.repository.INewsRepository
 import com.salla.mvi.domain.repository.NewsItem
+import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import org.koin.java.KoinJavaComponent
 
@@ -48,8 +49,8 @@ class MainViewModel(application: Application) :
 
     private fun fetchNews() {
         viewState = MainViewState.Fetching
-        repository.getMockApiResponse { result ->
-            when (result) {
+        viewModelScope.launch(Dispatchers.IO) {
+            when (val result = repository.getMockApiResponse()) {
                 is LCE.Error -> {
                     viewModelScope.launch {
                         viewState = MainViewState.Fetched

@@ -1,10 +1,7 @@
 package com.salla.mvi.domain.repository
 
 import com.salla.mvi.domain.helpers.LCE
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import kotlin.random.Random
 
 /**
@@ -17,17 +14,13 @@ import kotlin.random.Random
  *
  */
 
-open class NewsRepository : INewsRepository {
+class NewsRepository : INewsRepository {
 
-    private val scopeIO: CoroutineScope = CoroutineScope(Dispatchers.IO)
 
-    override fun getMockApiResponse(callback: (LCE<List<NewsItem>>) -> Unit) {
-        scopeIO.launch {
-            val fakeNews = constructMockData()
-            delay(2000)
-            if (callback != null)
-                callback(LCE.Success(data = fakeNews))
-        }
+    override suspend fun getMockApiResponse(): LCE<List<NewsItem>> {
+        val fakeNews = constructMockData()
+        delay(2000)
+        return LCE.Success(data = fakeNews)
     }
 
     private fun constructMockData(): List<NewsItem> {

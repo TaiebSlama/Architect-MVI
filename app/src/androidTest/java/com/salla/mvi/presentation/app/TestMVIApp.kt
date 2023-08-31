@@ -3,11 +3,11 @@ package com.salla.mvi.presentation.app
 import com.salla.mvi.domain.helpers.LCE
 import com.salla.mvi.domain.repository.INewsRepository
 import com.salla.mvi.domain.repository.NewsItem
-import com.salla.mvi.domain.repository.NewsRepository
+import kotlinx.coroutines.runBlocking
 import org.koin.core.context.GlobalContext.startKoin
 import org.koin.dsl.module
 import org.mockito.Mockito.mock
-import org.mockito.stubbing.Answer
+import org.mockito.Mockito.`when`
 import kotlin.random.Random
 
 
@@ -38,23 +38,22 @@ class TestMVIApp : MVIApp() {
 
 
 val testModule = module {
-    single<INewsRepository> { createMockNewRepository() }
+    single { createMockNewRepository() }
 }
 
-fun createMockNewRepository(): NewsRepository {
-    val model = mock<NewsRepository>()
-    val answer: Answer<LCE<List<NewsItem>>> = Answer<LCE<List<NewsItem>>> { _ ->
-        val newsList = mutableListOf<NewsItem>()
-        for (i in 1..2) {
-            val title = "News Test $i"
-            val description = "News Test $i Description"
-            val imageId = Random.nextInt(1, 1000)
-            val imageUrl = "https://picsum.photos/200/300?image=$imageId"
-            val news = NewsItem(title, description, imageUrl)
-            newsList.add(news)
-        }
-        LCE.Success(newsList)
+fun createMockNewRepository(): INewsRepository {
+    val model = mock<INewsRepository>()
+    val newsList = mutableListOf<NewsItem>()
+    for (i in 1..2) {
+        val title = "News Test $i"
+        val description = "News Test $i Description"
+        val imageId = Random.nextInt(1, 1000)
+        val imageUrl = "https://picsum.photos/200/300?image=$imageId"
+        val news = NewsItem(title, description, imageUrl)
+        newsList.add(news)
     }
-//    doAnswer(answer).`when`(model.getMockApiResponse {  })
+    runBlocking {
+        `when`(model.getMockApiResponse()).thenReturn(LCE.Success(newsList))
+    }
     return model
 }

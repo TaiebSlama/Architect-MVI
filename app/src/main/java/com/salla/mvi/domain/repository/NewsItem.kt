@@ -13,9 +13,9 @@ import androidx.recyclerview.widget.DiffUtil
  */
 
 data class NewsItem(
-    val title: String,
-    val description: String,
-    val imageUrl: String
+    val title: String = "",
+    val description: String = "",
+    val imageUrl: String = ""
 ) {
 
     companion object {

@@ -25,7 +25,6 @@ import kotlin.random.Random
  * Created by taieb.slama@zeta-box.com on 8/31/2023 .
  * Copyright (c) 2023 ZETA-BOX. All rights reserved.
  *
- * [ADD DESCRIPTION]
  */
 @RunWith(AndroidJUnit4::class)
 class MainTest : TestMockLoader<MainViewState>() {

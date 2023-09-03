@@ -19,9 +19,9 @@ package com.architect.mvi.viewModel
 import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import com.architect.mvi.util.TAG
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.StateFlow
 
 
 /**
@@ -36,8 +36,8 @@ import com.architect.mvi.util.TAG
 abstract class MVIViewModel<STATE, ACTION>(application: Application) :
     AndroidViewModel(application) {
 
-    private val _viewStates: MutableLiveData<STATE> = MutableLiveData()
-    internal fun viewStates(): LiveData<STATE> = _viewStates
+    private val _viewStates: MutableStateFlow<STATE?> = MutableStateFlow(null)
+    internal fun viewStates(): StateFlow<STATE?> = _viewStates
 
     private var _viewState: STATE? = null
     protected var viewState: STATE

@@ -22,9 +22,11 @@ import android.view.LayoutInflater
 import androidx.appcompat.app.AppCompatActivity
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.architect.mvi.util.TAG
 import com.architect.mvi.viewModel.MVIViewModel
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 
 /**
  * Created by slama.taieb.contact@gmail.com on 8/30/2023 .
@@ -49,20 +51,24 @@ abstract class MVIActivity<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>,
 
     private var bindingView: VDB? = null
 
-    private val viewStateObserver = Observer<STATE> {
-        Log.d(TAG, it.toString())
-        renderViewState(it)
+    private val viewStateCollector = FlowCollector<STATE?> {
+        it?.let {
+            Log.d(TAG, it.toString())
+            renderViewState(it)
+        }
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         //Registering observers
-        viewModel.viewStates().observe(this, viewStateObserver)
+        lifecycleScope.launch {
+            viewModel.viewStates().collect(viewStateCollector)
+        }
         viewModel.initAttributes()
         super.onCreate(savedInstanceState)
         val root = LayoutInflater.from(this).inflate(layoutId, null, false)
-        setContentView(root)
         bindingView = DataBindingUtil.bind(root)
         configDataBinding(bindingView)
+        setContentView(root)
     }
 
     abstract fun renderViewState(viewState: STATE)

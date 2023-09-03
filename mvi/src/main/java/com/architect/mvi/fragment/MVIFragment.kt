@@ -24,9 +24,11 @@ import android.view.ViewGroup
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
+import androidx.lifecycle.lifecycleScope
 import com.architect.mvi.util.TAG
 import com.architect.mvi.viewModel.MVIViewModel
+import kotlinx.coroutines.flow.FlowCollector
+import kotlinx.coroutines.launch
 
 /**
  * Created by slama.taieb.contact@gmail.com on 8/30/2023 .
@@ -52,9 +54,11 @@ abstract class MVIFragment<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>,
 
     private var bindingView: VDB? = null
 
-    private val viewStateObserver = Observer<STATE> {
-        Log.d(TAG, "observed viewState : $it")
-        renderViewState(it)
+    private val viewStateCollector = FlowCollector<STATE?> {
+        it?.let {
+            Log.d(TAG, "observed viewState : $it")
+            renderViewState(it)
+        }
     }
 
     override fun onCreateView(
@@ -67,7 +71,9 @@ abstract class MVIFragment<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>,
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        viewModel.viewStates().observe(viewLifecycleOwner, viewStateObserver)
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.viewStates().collect(viewStateCollector)
+        }
         bindingView = DataBindingUtil.bind(view)
         configDataBinding(bindingView)
     }

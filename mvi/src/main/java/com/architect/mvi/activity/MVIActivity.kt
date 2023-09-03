@@ -59,16 +59,15 @@ abstract class MVIActivity<STATE, EVENT, ViewModel : MVIViewModel<STATE, EVENT>,
     }
 
     override fun onCreate(savedInstanceState: Bundle?) {
-        //Registering observers
+        super.onCreate(savedInstanceState)
+        val root = LayoutInflater.from(this).inflate(layoutId, null, false)
+        bindingView = DataBindingUtil.bind(root)
+        setContentView(root)
+        configDataBinding(bindingView)
         lifecycleScope.launch {
             viewModel.viewStates().collect(viewStateCollector)
         }
         viewModel.initAttributes()
-        super.onCreate(savedInstanceState)
-        val root = LayoutInflater.from(this).inflate(layoutId, null, false)
-        bindingView = DataBindingUtil.bind(root)
-        configDataBinding(bindingView)
-        setContentView(root)
     }
 
     abstract fun renderViewState(viewState: STATE)

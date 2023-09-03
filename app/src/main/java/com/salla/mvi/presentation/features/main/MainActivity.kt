@@ -22,9 +22,10 @@ class MainActivity :
 
     override val viewModel: MainViewModel by viewModels()
 
-     var bindingModel: MainBindingModel = MainBindingModel()
+    lateinit var bindingModel: MainBindingModel
 
     override fun configDataBinding(bindingView: ActivityMainBinding?) {
+        bindingModel = MainBindingModel()
         bindingView?.controller = this
     }
 
